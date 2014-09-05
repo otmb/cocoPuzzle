@@ -40,7 +40,7 @@ protected:
     cocos2d::Color3B _tagColor[5]{
         cocos2d::Color3B(0,255,255),
         cocos2d::Color3B(0,0,255),
-        cocos2d::Color3B(0,0,0),
+        cocos2d::Color3B(128,128,128),
         cocos2d::Color3B(255,0,0),
         cocos2d::Color3B(255,255,255)
     };

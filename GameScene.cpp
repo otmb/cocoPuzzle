@@ -26,7 +26,7 @@ Scene* GameScene::createScene()
     scene->getPhysicsWorld()->setSpeed(4.0f);
     
     //物理オブジェクトにを可視的にしてくれるデバックモード
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
     auto layer = GameScene::create();
     scene->addChild(layer);
@@ -54,7 +54,8 @@ bool GameScene::init()
     
     auto wall = Node::create();
     //wall->setPhysicsBody(PhysicsBody::createEdgeChain(vec, 5, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
-    wall->setPhysicsBody(PhysicsBody::createEdgeChain(vec, 6, PhysicsMaterial(0.0f, 0.0f, 0.0f)));
+    // 密度、反発、摩擦
+    wall->setPhysicsBody(PhysicsBody::createEdgeChain(vec, 6, PhysicsMaterial(0.0f, 0.0f, 0.5f)));
     wall->setPosition(0, 0);
     addChild(wall);
     initTouchEvent();

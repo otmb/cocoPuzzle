@@ -18,16 +18,19 @@ Bullet::Bullet()
 
 bool Bullet::init()
 {
-    if (!Sprite::initWithFile("Bullet.png")){
+    if (!Sprite::initWithFile("ball.png")){
         return false;
     }
     
-    //this->setColor(Color3B(255,255,255));
-    auto pBall = PhysicsBody::createCircle(bulletSize);
+    this->setScale(0.13f * bulletSize);
+    //this->setScale(0.043f * bulletSize);
+    auto pBall = PhysicsBody::createCircle(bulletSize,
+                                           PhysicsMaterial(1.0f, 0.6f, 0.5f));
     pBall->setDynamic(true);
     pBall->setRotationEnable(true);
-    log("%f",pBall->getMass());
-    //pBall->setMass(10000.0f);
+    pBall->setMoment(PHYSICS_INFINITY);
+    //log("%f",pBall->getMass());
+    pBall->setMass(1.0f);
     this->setPhysicsBody(pBall);
     
     return true;

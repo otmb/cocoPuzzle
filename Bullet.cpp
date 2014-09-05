@@ -10,8 +10,6 @@
 
 USING_NS_CC;
 
-#define CIRCLE_SIZE 45.0f
-
 //コンストラクタ
 Bullet::Bullet()
 : _state(State::Moving)
@@ -25,10 +23,10 @@ bool Bullet::init()
     }
     
     //this->setColor(Color3B(255,255,255));
-    auto pBall = PhysicsBody::createCircle(CIRCLE_SIZE);
+    auto pBall = PhysicsBody::createCircle(bulletSize);
     pBall->setDynamic(true);
     pBall->setRotationEnable(true);
-    //log("%f",pBall->getMass());
+    log("%f",pBall->getMass());
     //pBall->setMass(10000.0f);
     this->setPhysicsBody(pBall);
     

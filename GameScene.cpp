@@ -20,10 +20,10 @@ Scene* GameScene::createScene()
     auto scene = Scene::createWithPhysics();
     
     //Worldに対して重力をセット
-    Vect gravity;
-    gravity.setPoint(0, -50);
-    scene->getPhysicsWorld()->setGravity(gravity);
-    scene->getPhysicsWorld()->setSpeed(6.0f);
+    //Vect gravity;
+    //gravity.setPoint(0, -50);
+    scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0));
+    scene->getPhysicsWorld()->setSpeed(4.0f);
     
     //物理オブジェクトにを可視的にしてくれるデバックモード
     scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
@@ -42,18 +42,19 @@ bool GameScene::init()
     
     auto winSize = Director::getInstance()->getWinSize();
     
-    Vec2 vec[5] =
+    Vec2 vec[6] =
     {
-        Vec2(1, 700),
+        Vec2(winSize.width-1, winSize.height -1),
+        Vec2(1, winSize.height -1),
         Vec2(1, 100),
         Vec2(winSize.width/2, 0),
         Vec2(winSize.width-1,100),
-        Vec2(winSize.width-1,700),
+        Vec2(winSize.width-1,winSize.height -1),
     };
     
     auto wall = Node::create();
     //wall->setPhysicsBody(PhysicsBody::createEdgeChain(vec, 5, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
-    wall->setPhysicsBody(PhysicsBody::createEdgeChain(vec, 5, PhysicsMaterial(0.0f, 0.0f, 0.0f)));
+    wall->setPhysicsBody(PhysicsBody::createEdgeChain(vec, 6, PhysicsMaterial(0.0f, 0.0f, 0.0f)));
     wall->setPosition(0, 0);
     addChild(wall);
     initTouchEvent();
@@ -80,7 +81,7 @@ void GameScene::showBullet(){
     bullet->setColor(_tagColor[tagNum]);
     
     auto winSize = Director::getInstance()->getWinSize();
-    bullet->setPosition(winSize.width/2, winSize.height);
+    bullet->setPosition(winSize.width/2, winSize.height - bullet->bulletSize);
     
     PhysicsBody* pBall = bullet->getPhysicsBody();
     pBall->setTag(T_Bullet);

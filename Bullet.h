@@ -28,6 +28,7 @@ public:
     CC_SYNTHESIZE_READONLY(State, _state, State); // 弾の状態
     
     void brokenBullet(); // 弾が壊れる
+    float const bulletSize = 45.0f;
 };
 
 #endif /* defined(__Puzzle2__Bullet__) */

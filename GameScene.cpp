@@ -8,6 +8,7 @@
 
 #include "GameScene.h"
 #include "Bullet.h"
+#include "UIDialog.h"
 
 USING_NS_CC;
 
@@ -33,6 +34,7 @@ Scene* GameScene::createScene()
     
     return scene;
 }
+#include <functional>
 
 // on "init" you need to initialize your instance
 bool GameScene::init()
@@ -58,13 +60,42 @@ bool GameScene::init()
     wall->setPhysicsBody(PhysicsBody::createEdgeChain(vec, 6, PhysicsMaterial(0.0f, 0.0f, 0.5f)));
     wall->setPosition(0, 0);
     addChild(wall);
+    
     initTouchEvent();
     scheduleUpdate();
     
+    Button* button = Button::create("Bullet.png");
+    button->setPosition(Vec2(winSize.width,winSize.height - 50));
+    button->addTouchEventListener(CC_CALLBACK_2(GameScene::touchEvent, this));
+    addChild(button);
     
     return true;
 }
 
+void GameScene::touchEvent(Ref *pSender, Widget::TouchEventType type)
+{
+    //std::function<void(Ref*,Widget::TouchEventType)> callback = CC_CALLBACK_0(GameScene::dialogClose,this);
+    Widget::ccWidgetTouchCallback callback = CC_CALLBACK_0(GameScene::dialogClose,this);
+    _dialog = UIDialog::create(callback);
+    addChild(_dialog,Z_Dialog,T_Dialog);
+}
+
+//void GameScene::dialogClose(Ref *pSender, Widget::TouchEventType type)
+void GameScene::dialogClose()
+{
+    auto nodes = getChildren();
+    
+    for (auto node : nodes)
+    {
+        switch (node->getTag())
+        {
+            case T_Dialog:
+                UIDialog* dialog = static_cast<UIDialog*>(node);
+                dialog->close();
+                break;
+        }
+    }
+}
 
 void GameScene::update(float dt)
 {
@@ -143,4 +174,3 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
         }
     }
 }
-

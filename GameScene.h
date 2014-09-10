@@ -11,13 +11,24 @@
 
 #include "cocos2d.h"
 
+#include "extensions/cocos-ext.h"
+#include "ui/CocosGUI.h"
+#include "ui/UIWidget.h"
+#include "UIDialog.h"
+
+USING_NS_CC;
+USING_NS_CC_EXT;
+
+using namespace ui;
+
 class GameScene : public cocos2d::Layer
 {
 protected:
     enum ZOrder
     {
         Z_Bg = 0,
-        Z_Bullet
+        Z_Bullet,
+        Z_Dialog,
     };
     
     enum Tag
@@ -28,14 +39,21 @@ protected:
         T_Bullet3,
         T_Bullet4,
         T_Bullet5,
+        T_Dialog,
     };
     
     float _time;
     int _bullet;
     int _tag;
+    UIDialog* _dialog;
     
     void initTouchEvent();
     void showBullet();
+    
+    //void addLayer();
+    
+    //cocos2d::Action* dialogClose();
+    
     
     cocos2d::Color3B _tagColor[5]{
         cocos2d::Color3B(0,255,255),
@@ -44,6 +62,7 @@ protected:
         cocos2d::Color3B(255,0,0),
         cocos2d::Color3B(255,255,255)
     };
+    //void dialogClose();
     
 public:
     static cocos2d::Scene* createScene();
@@ -53,6 +72,9 @@ public:
     virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* evnet);
     virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* evnet);
     virtual void update(float dt);
+    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+    //void dialogClose(Ref *pSender, Widget::TouchEventType type);
+    void dialogClose();
 };
 
 #endif /* defined(__Puzzle2__GameScene__) */

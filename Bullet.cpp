@@ -25,7 +25,7 @@ bool Bullet::init()
     this->setScale(0.13f * bulletSize);
     //this->setScale(0.043f * bulletSize);
     auto pBall = PhysicsBody::createCircle(bulletSize,
-                                           PhysicsMaterial(1.0f, 0.6f, 0.5f));
+                                           PhysicsMaterial(1.0f, 0.6f, 0.3f));
     pBall->setDynamic(true);
     pBall->setRotationEnable(true);
     pBall->setMoment(PHYSICS_INFINITY);

@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "Bullet.h"
 #include "UIDialog.h"
+#include "DrawLine.h"
 
 USING_NS_CC;
 
@@ -69,6 +70,8 @@ bool GameScene::init()
     button->addTouchEventListener(CC_CALLBACK_2(GameScene::touchEvent, this));
     addChild(button);
     
+    _bulletVicts = new std::vector<Vec2*>();
+
     return true;
 }
 
@@ -103,6 +106,10 @@ void GameScene::update(float dt)
     
     // 弾の発射判定
     if (MAX_BULLET > _bullet) showBullet();
+    
+    // 線を引く
+    DrawLine* node = DrawLine::create(_bulletVicts);
+    addChild(node,Z_Line,T_Line);
 }
 
 void GameScene::showBullet(){
@@ -127,6 +134,7 @@ void GameScene::initTouchEvent()
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
     touchListener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
 }
@@ -154,6 +162,9 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
     auto location = touch->getLocation();
     auto arr = this->getScene()->getPhysicsWorld()->getShapes(location);
     
+    //_bullets = Vector<Bullet*>();
+    //std::vector<Vec2*> * _bulletVicts = new std::vector<Vec2*>();
+    
     Bullet* bullet = nullptr;
     for (auto& obj : arr)
     {
@@ -169,8 +180,40 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
     }
     if (bullet != nullptr){
         if (bullet->getState() == Bullet::State::Moving){
-            bullet->brokenBullet();
+            _bullets.pushBack(bullet);
+            _bulletVicts->push_back(new Vec2(bullet->getPosition()));
+        }
+    }
+    
+    //DrawLine* node = DrawLine::create();
+    //addChild(node);
+}
+
+void GameScene::onTouchEnded(Touch* touch, Event* event)
+{
+    for (auto* bullet : _bullets){
+        if (bullet->getState() == Bullet::State::Moving){
+             bullet->brokenBullet();
             _bullet--;
+        }
+    }
+    _bullets = Vector<Bullet*>();
+    _bulletVicts = new std::vector<Vec2*>();
+    DrawLineRemove();
+}
+
+void GameScene::DrawLineRemove()
+{
+    auto nodes = getChildren();
+    
+    for (auto node : nodes)
+    {
+        switch (node->getTag())
+        {
+            case T_Line:
+                DrawLine* line = static_cast<DrawLine*>(node);
+                line->remove();
+                break;
         }
     }
 }

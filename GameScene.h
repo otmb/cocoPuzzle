@@ -15,6 +15,7 @@
 #include "ui/CocosGUI.h"
 #include "ui/UIWidget.h"
 #include "UIDialog.h"
+#include "Bullet.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -28,6 +29,7 @@ protected:
     {
         Z_Bg = 0,
         Z_Bullet,
+        Z_Line,
         Z_Dialog,
     };
     
@@ -40,6 +42,7 @@ protected:
         T_Bullet4,
         T_Bullet5,
         T_Dialog,
+        T_Line,
     };
     
     float _time;
@@ -63,6 +66,7 @@ protected:
         cocos2d::Color3B(255,255,255)
     };
     //void dialogClose();
+    void DrawLineRemove();
     
 public:
     static cocos2d::Scene* createScene();
@@ -71,10 +75,15 @@ public:
     
     virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* evnet);
     virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* evnet);
+    virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* evnet);
     virtual void update(float dt);
     void touchEvent(Ref *pSender, Widget::TouchEventType type);
     //void dialogClose(Ref *pSender, Widget::TouchEventType type);
     void dialogClose();
+    
+    Vector<Bullet*> _bullets;
+    std::vector<Vec2*> * _bulletVicts;
+    //Vector<Vec2*> _bulletVicts;
 };
 
 #endif /* defined(__Puzzle2__GameScene__) */

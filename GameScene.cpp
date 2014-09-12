@@ -70,7 +70,7 @@ bool GameScene::init()
     button->addTouchEventListener(CC_CALLBACK_2(GameScene::touchEvent, this));
     addChild(button);
     
-    //_bulletVicts = new std::vector<Vec2*>();
+    _bulletVicts = new std::vector<Vec2*>();
 
     return true;
 }
@@ -108,15 +108,15 @@ void GameScene::update(float dt)
     if (MAX_BULLET > _bullet) showBullet();
     
     // 弾の座標が物理演算で変わるので対処
-    std::vector<Vec2*> * victs = new std::vector<Vec2*>();
+    //std::vector<Vec2*> * victs = new std::vector<Vec2*>();
     for(auto* bullet : _bullets){
-        victs->push_back(new Vec2(bullet->getPosition()));
+        _bulletVicts->push_back(new Vec2(bullet->getPosition()));
     }
     DrawLineRemove();
     // 線を引く
-    DrawLine* node = DrawLine::create(victs);
+    DrawLine* node = DrawLine::create(_bulletVicts);
     addChild(node,Z_Line,T_Line);
-    victs->clear();
+    _bulletVicts->clear();
 }
 
 void GameScene::showBullet(){

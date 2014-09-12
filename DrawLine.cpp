@@ -35,7 +35,13 @@ bool DrawLine::init()
         for(auto* vec : *_vects){
             
             if (tmpVec != nullptr){
-                _node->drawSegment(Vec2(tmpVec->x,tmpVec->y+5.0), Vec2(vec->x,vec->y+5.0), 1, Color4F::WHITE);
+                _node->drawSegment(Vec2(tmpVec->x,tmpVec->y), Vec2(vec->x,vec->y), 3, Color4F::WHITE);
+                /*
+                Point points[] = {
+                    Point(tmpVec->x + 5,tmpVec->y + 5), Point(tmpVec->x -5,tmpVec->y -5) ,
+                    Point(vec->x - 5,vec->y -5 ), Point(vec->x + 5,vec->y + 5)};
+                _node->drawPolygon(points, sizeof(points)/sizeof(points[0]), Color4F::WHITE, 1, Color4F::GREEN);
+                */
             }
             tmpVec = vec;
         }

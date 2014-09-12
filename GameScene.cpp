@@ -202,6 +202,8 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
                 } else {
                     _bullets.pushBack(bullet);
                 }
+            //} else if (_bullets.back() == bullet) {
+            //    _bullets.erase(_bullets.find(bullet));
             }
         }
     }

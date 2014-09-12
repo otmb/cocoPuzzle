@@ -82,7 +82,7 @@ public:
     void dialogClose();
     
     Vector<Bullet*> _bullets;
-    std::vector<Vec2*> * _bulletVicts;
+    //std::vector<Vec2*> * _bulletVicts;
     //Vector<Vec2*> _bulletVicts;
 };
 

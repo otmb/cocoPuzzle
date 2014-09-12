@@ -71,7 +71,7 @@ bool GameScene::init()
     addChild(button);
     
     _bulletVicts = new std::vector<Vec2*>();
-
+    _fingerPosition = nullptr;
     return true;
 }
 
@@ -112,6 +112,9 @@ void GameScene::update(float dt)
     for(auto* bullet : _bullets){
         _bulletVicts->push_back(new Vec2(bullet->getPosition()));
     }
+    if (_fingerPosition != nullptr)
+        _bulletVicts->push_back(_fingerPosition);
+    
     DrawLineRemove();
     // 線を引く
     DrawLine* node = DrawLine::create(_bulletVicts);
@@ -193,6 +196,7 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
             //_bulletVicts->push_back(new Vec2(bullet->getPosition()));
         }
     }
+    _fingerPosition = new Vec2(location);
     
     //DrawLine* node = DrawLine::create();
     //addChild(node);
@@ -200,10 +204,13 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
 
 void GameScene::onTouchEnded(Touch* touch, Event* event)
 {
-    for (auto* bullet : _bullets){
-        if (bullet->getState() == Bullet::State::Moving){
-             bullet->brokenBullet();
-            _bullet--;
+    // 2個以上で削除
+    if (!_bullets.empty() && _bullets.size() > 2){
+        for (auto* bullet : _bullets){
+            if (bullet->getState() == Bullet::State::Moving){
+                 bullet->brokenBullet();
+                _bullet--;
+            }
         }
     }
     _bullets.clear();

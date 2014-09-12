@@ -83,6 +83,7 @@ public:
     
     Vector<Bullet*> _bullets;
     std::vector<Vec2*> * _bulletVicts;
+    Vec2* _fingerPosition;
     //Vector<Vec2*> _bulletVicts; // これは出来ない
 };
 

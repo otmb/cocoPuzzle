@@ -11,15 +11,15 @@
 USING_NS_CC;
 
 //コンストラクタ
-Bullet::Bullet(Texture2D* texture)
-: _node(nullptr), _texture(texture), _state(State::Moving)
+Bullet::Bullet()
+: _state(State::Moving)
 {
 }
 
-Bullet* Bullet::create(Texture2D* texture)
+Bullet* Bullet::create()
 {
     
-    auto node = new Bullet(texture);
+    auto node = new Bullet();
     node->init();
     node->autorelease();
     
@@ -28,13 +28,9 @@ Bullet* Bullet::create(Texture2D* texture)
 
 bool Bullet::init()
 {
-    if (!Sprite::init()){
+    if (!Sprite::initWithFile("ball.png")){
         return false;
     }
-    
-    _node = Sprite::createWithTexture(_texture);
-    //_node->setColor(_color);
-    addChild(_node);
     
     this->setScale(0.13f * bulletSize);
     //this->setScale(0.043f * bulletSize);
@@ -49,11 +45,6 @@ bool Bullet::init()
     
     return true;
     
-}
-
-void Bullet::setColor(Color3B &color)
-{
-    _node->setColor(color);
 }
 
 void Bullet::brokenBullet()

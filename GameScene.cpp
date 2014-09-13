@@ -73,8 +73,8 @@ bool GameScene::init()
     _bulletVicts = new std::vector<Vec2*>();
     _fingerPosition = nullptr;
     
-    _spriteNode = SpriteBatchNode::create("ball.png");
-    addChild(_spriteNode);
+    //_spriteNode = SpriteBatchNode::create("ball.png");
+    //addChild(_spriteNode);
     
     return true;
 }
@@ -127,11 +127,12 @@ void GameScene::update(float dt)
 }
 
 void GameScene::showBullet(){
-   
-    auto bullet = Bullet::create(_spriteNode->getTexture());
+    
+    //auto* sp = Sprite::createWithTexture(_spriteNode->getTexture());
+    //addChild(sp,Z_Bullet);
+    auto bullet = Bullet::create();
     //srand((unsigned int)time(NULL));
     int tagNum = arc4random()%5;
-   
     
     bullet->setColor(_tagColor[tagNum]);
     

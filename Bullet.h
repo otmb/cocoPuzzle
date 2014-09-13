@@ -22,10 +22,8 @@ public:
         Broken, // 壊れる
     };
     
-    cocos2d::Texture2D* _texture;
-    cocos2d::Sprite* _node;
-    Bullet(cocos2d::Texture2D* texture);
-    static Bullet* create(cocos2d::Texture2D* texture);
+    Bullet();
+    static Bullet* create();
     virtual bool init();
     //CREATE_FUNC(Bullet);
     
@@ -33,8 +31,6 @@ public:
     
     void brokenBullet(); // 弾が壊れる
     float const bulletSize = 45.0f;
-    
-    void setColor(cocos2d::Color3B &color);
 };
 
 #endif /* defined(__Puzzle2__Bullet__) */

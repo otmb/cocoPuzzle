@@ -68,6 +68,11 @@ protected:
     //void dialogClose();
     void DrawLineRemove();
     
+    SpriteBatchNode* _spriteNode;
+    Vector<Bullet*> _bullets;
+    std::vector<Vec2*> * _bulletVicts;
+    Vec2* _fingerPosition;
+    
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
@@ -81,9 +86,7 @@ public:
     //void dialogClose(Ref *pSender, Widget::TouchEventType type);
     void dialogClose();
     
-    Vector<Bullet*> _bullets;
-    std::vector<Vec2*> * _bulletVicts;
-    Vec2* _fingerPosition;
+    
     //Vector<Vec2*> _bulletVicts; // これは出来ない
 };
 

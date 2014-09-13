@@ -72,6 +72,10 @@ bool GameScene::init()
     
     _bulletVicts = new std::vector<Vec2*>();
     _fingerPosition = nullptr;
+    
+    _spriteNode = SpriteBatchNode::create("ball.png");
+    addChild(_spriteNode);
+    
     return true;
 }
 
@@ -123,10 +127,12 @@ void GameScene::update(float dt)
 }
 
 void GameScene::showBullet(){
-    auto bullet = Bullet::create();
-    
+   
+    auto bullet = Bullet::create(_spriteNode->getTexture());
     //srand((unsigned int)time(NULL));
     int tagNum = arc4random()%5;
+   
+    
     bullet->setColor(_tagColor[tagNum]);
     
     auto winSize = Director::getInstance()->getWinSize();
@@ -188,23 +194,20 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
             }
         }
     }
-    if (bullet != nullptr){
-        if (bullet->getState() == Bullet::State::Moving){
-            // 配列に入っていない
-            if (!_bullets.contains(bullet)){
-                if (!_bullets.empty()){ // 空ではない
-                    // 距離の比較
-                    float distance = _bullets.back()->getPosition().distance(bullet->getPosition());
-                    //log("%f",distance);
-                    if (distance < bullet->bulletSize * 3.0f){
-                        _bullets.pushBack(bullet);
-                    }
-                } else {
-                    _bullets.pushBack(bullet);
-                }
+    if (bullet != nullptr
+        && bullet->getState() == Bullet::State::Moving){
+        
+        if (_bullets.empty()){ // 空
+            _bullets.pushBack(bullet);
+        } else if (!_bullets.contains(bullet)){ // 配列に入っていない
+            // 距離の比較
+            float distance = _bullets.back()->getPosition().distance(bullet->getPosition());
+            //log("%f",distance);
+            if (distance < bullet->bulletSize * 3.0f){
+                _bullets.pushBack(bullet);
+            }
             //} else if (_bullets.back() == bullet) {
             //    _bullets.erase(_bullets.find(bullet));
-            }
         }
     }
     if (_bullets.size() < 2){

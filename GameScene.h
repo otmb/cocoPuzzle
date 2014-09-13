@@ -68,7 +68,7 @@ protected:
     //void dialogClose();
     void DrawLineRemove();
     
-    SpriteBatchNode* _spriteNode;
+    //SpriteBatchNode* _spriteNode;
     Vector<Bullet*> _bullets;
     std::vector<Vec2*> * _bulletVicts;
     Vec2* _fingerPosition;
